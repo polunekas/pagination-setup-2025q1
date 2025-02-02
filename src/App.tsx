@@ -1,5 +1,8 @@
 import React, { Component, type ReactNode, createRef } from 'react';
 import styles from './App.module.css';
+import SearchBar from './components/SearchBar/SearchBar';
+import SearchResults from './components/SearchResults/SearchResults';
+import Loader from './components/Loader/Loader';
 import pikachuGif from './assets/pikachu-pokemon.gif';
 import pokemonHeader from './assets/pokemon_header.webp';
 
@@ -106,7 +109,19 @@ class App extends Component<object, AppState> {
             </dialog>
           </>
         )}
-
+        <SearchBar fromSearch={this.handleSearch} />
+        {this.state.isLoading ? (
+          <Loader />
+        ) : this.state.error ? (
+          <p>{this.state.error}</p>
+        ) : (
+          <div
+            ref={this.resultsContainerRef}
+            className={styles.resultsContainer}
+          >
+            <SearchResults pokemons={this.state.pokemons} />
+          </div>
+        )}
         <img src={pikachuGif} alt="Pikachu" className={styles.fixedGif} />
       </div>
     );

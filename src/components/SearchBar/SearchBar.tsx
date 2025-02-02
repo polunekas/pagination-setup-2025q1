@@ -1,4 +1,4 @@
-import React, { Component, type ChangeEvent, type FormEvent } from 'react';
+import { Component, type ChangeEvent, type FormEvent } from 'react';
 import styles from './SearchBar.module.css';
 
 interface SearchBarProps {

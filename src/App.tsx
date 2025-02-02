@@ -5,6 +5,8 @@ import SearchResults from './components/SearchResults/SearchResults';
 import Loader from './components/Loader/Loader';
 import pikachuGif from './assets/pikachu-pokemon.gif';
 import pokemonHeader from './assets/pokemon_header.webp';
+import { fetchPokemonData, fetchPokemonsList } from './api';
+import type { PokemonCard } from './api';
 
 interface Pokemon {
   name: string;
@@ -50,6 +52,80 @@ class App extends Component<object, AppState> {
 
   handleSearch = async (searchItem: string) => {
     this.setState({ searchItem, error: null, isLoading: true });
+
+    try {
+      let pokemons: Pokemon[] = [];
+      if (searchItem) {
+        const data = await fetchPokemonData(searchItem);
+        pokemons = [
+          {
+            name: data.name || 'Not Found',
+            height: data.height || 'Not Found',
+            weight: data.weight || 'Not Found',
+            abilities: data.abilities
+              ? data.abilities
+                  .map(
+                    (ability: { ability: { name: string } }) =>
+                      ability.ability.name
+                  )
+                  .join(', ')
+              : 'Not Found',
+            types: data.types
+              ? data.types
+                  .map((type: { type: { name: string } }) => type.type.name)
+                  .join(', ')
+              : 'Not Found',
+          },
+        ];
+      } else {
+        const pokemonCards: PokemonCard[] = await fetchPokemonsList();
+        const pokemonDetailsPromises = pokemonCards.map((pokemon) =>
+          fetch(pokemon.url).then((response) => response.json())
+        );
+
+        const detailedData = await Promise.all(pokemonDetailsPromises);
+
+        pokemons = detailedData.map((data) => ({
+          name: data.name || 'Not Found',
+          height: data.height || 'Not Found',
+          weight: data.weight || 'Not Found',
+          abilities: data.abilities
+            ? data.abilities
+                .map(
+                  (ability: { ability: { name: string } }) =>
+                    ability.ability.name
+                )
+                .join(', ')
+            : 'Not Found',
+          types: data.types
+            ? data.types
+                .map((type: { type: { name: string } }) => type.type.name)
+                .join(', ')
+            : 'Not Found',
+        }));
+      }
+
+      this.setState({ pokemons, isLoading: false }, () => {
+        if (searchItem) {
+          const foundIndex = pokemons.findIndex(
+            (pokemon) => pokemon.name === searchItem.toLowerCase()
+          );
+          if (foundIndex !== -1 && this.resultsContainerRef.current) {
+            this.resultsContainerRef.current.scrollTo({
+              top: foundIndex * 100,
+              behavior: 'smooth',
+            });
+          }
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        this.setState({ error: error.message, isLoading: false });
+      } else {
+        this.setState({ error: 'An unknown error occurred', isLoading: false });
+      }
+    }
   };
 
   togglePopup = () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './SearchResults.module.css';
 
 interface Pokemon {
@@ -13,7 +13,7 @@ interface SearchResultsProps {
   pokemons: Pokemon[];
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ pokemons }) => {
+const SearchResults: FC<SearchResultsProps> = ({ pokemons }) => {
   return (
     <div className={styles.resultsContainer}>
       {pokemons.length > 0 ? (

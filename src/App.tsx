@@ -128,18 +128,8 @@ class App extends Component<object, AppState> {
     }
   };
 
-  togglePopup = () => {
-    this.setState((prevState) => ({ showPopup: !prevState.showPopup }));
-  };
-
   triggerError = () => {
     this.setState({ throwError: true });
-  };
-
-  handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      this.togglePopup();
-    }
   };
 
   render(): ReactNode {
@@ -148,57 +138,33 @@ class App extends Component<object, AppState> {
     }
 
     return (
-      <div id="root" className={styles.root}>
-        <header className={styles.header}>
-          <img
-            src={pokemonHeader}
-            alt="Pokemon"
-            className={styles.headerLogo}
-          />
-          <button
-            className={styles.descriptionButton}
-            onClick={this.togglePopup}
-          >
-            How to use
-          </button>
+      <div className={styles.root}>
+        <div className={styles.container}>
+          <header className={styles.header}>
+            <img
+              src={pokemonHeader}
+              alt="Pokemon"
+              className={styles.headerLogo}
+            />
+          </header>
+          <SearchBar fromSearch={this.handleSearch} />
+          {this.state.isLoading ? (
+            <Loader />
+          ) : this.state.error ? (
+            <p>{this.state.error}</p>
+          ) : (
+            <div
+              ref={this.resultsContainerRef}
+              className={styles.resultsContainer}
+            >
+              <SearchResults pokemons={this.state.pokemons} />
+            </div>
+          )}
           <button className={styles.errorButton} onClick={this.triggerError}>
             Throw Error
           </button>
-        </header>
-        {this.state.showPopup && (
-          <>
-            <div
-              className={styles.overlay}
-              role="button"
-              tabIndex={0}
-              onClick={this.togglePopup}
-              onKeyDown={this.handleKeyPress}
-              aria-label="Close popup"
-            ></div>
-            <dialog open className={`${styles.popup} ${styles.fadeIn}`}>
-              <h2>How to use the search</h2>
-              <p>Type the name of a Pokémon and click Search or press Enter.</p>
-              <p>Example: pikachu</p>
-              <button className={styles.closeButton} onClick={this.togglePopup}>
-                Close
-              </button>
-            </dialog>
-          </>
-        )}
-        <SearchBar fromSearch={this.handleSearch} />
-        {this.state.isLoading ? (
-          <Loader />
-        ) : this.state.error ? (
-          <p>{this.state.error}</p>
-        ) : (
-          <div
-            ref={this.resultsContainerRef}
-            className={styles.resultsContainer}
-          >
-            <SearchResults pokemons={this.state.pokemons} />
-          </div>
-        )}
-        <img src={pikachuGif} alt="Pikachu" className={styles.fixedGif} />
+          {/* <img src={pikachuGif} alt="Pikachu" className={styles.fixedGif} /> */}
+        </div>
       </div>
     );
   }

@@ -16,7 +16,7 @@ interface SearchResultsProps {
   setCurrentPage: (page: number) => void;
   totalPages: number;
   searchItem: string;
-  isSearchingSpecificPokemon: boolean;
+  onPokemonClick: (id: string) => void;
 }
 
 const SearchResults: FC<SearchResultsProps> = ({
@@ -25,7 +25,7 @@ const SearchResults: FC<SearchResultsProps> = ({
   setCurrentPage,
   totalPages,
   searchItem,
-  isSearchingSpecificPokemon,
+  onPokemonClick,
 }) => {
   return (
     <>
@@ -34,13 +34,14 @@ const SearchResults: FC<SearchResultsProps> = ({
           pokemons.map((result, index) => (
             <div
               key={index}
-              className={`${styles.resultItem} ${searchItem.toLowerCase() === result.name.toLowerCase() ? styles.highlight : ''}`}
+              className={`${styles.resultItem} ${
+                searchItem.toLowerCase() === result.name.toLowerCase()
+                  ? styles.highlight
+                  : ''
+              }`}
+              onClick={() => onPokemonClick(result.name)}
             >
               <h3>{result.name[0].toUpperCase() + result.name.slice(1)}</h3>
-              <p>Height: {result.height}</p>
-              <p>Weight: {result.weight}</p>
-              <p>Abilities: {result.abilities}</p>
-              <p>Types: {result.types}</p>
             </div>
           ))
         ) : (
@@ -51,7 +52,7 @@ const SearchResults: FC<SearchResultsProps> = ({
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
-        isSearchingSpecificPokemon={isSearchingSpecificPokemon}
+        isSearchingSpecificPokemon={false}
       />
     </>
   );

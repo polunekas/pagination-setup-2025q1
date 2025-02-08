@@ -35,6 +35,11 @@ export const handleSearch = async (
   searchItem: string,
   updateState: (newState: SearchState) => void
 ) => {
+  if (searchItem.trim() === '') {
+    updateState({ searchItem, pokemons: [], error: null, isLoading: false });
+    return;
+  }
+
   updateState({ searchItem, pokemons: [], error: null, isLoading: true });
 
   try {
@@ -57,15 +62,7 @@ export const handleSearch = async (
       });
 
       const detailedData = (await Promise.all(pokemonDetailsPromises)).filter(
-        (
-          data
-        ): data is {
-          name?: string;
-          height?: number;
-          weight?: number;
-          abilities?: { ability: { name: string } }[];
-          types?: { type: { name: string } }[];
-        } => data !== null
+        (data): data is Pokemon => data !== null
       );
       pokemons = detailedData.map(parsePokemonData);
     }

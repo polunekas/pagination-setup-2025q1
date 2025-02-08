@@ -25,6 +25,13 @@ function useSearch(initialSearchItem: string) {
     });
   };
 
+  // Автоматический поиск при изменении initialSearchItem
+  useEffect(() => {
+    if (initialSearchItem) {
+      searchPokemon(initialSearchItem);
+    }
+  }, [initialSearchItem]);
+
   useEffect(() => {
     if (!searchItem) {
       setIsLoading(true);

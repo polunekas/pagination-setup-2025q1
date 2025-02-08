@@ -14,6 +14,12 @@ function useSearch(initialSearchItem: string) {
   const limitPerPage = 6;
 
   const searchPokemon = (query: string) => {
+    if (query.trim() === '') {
+      setPokemons([]);
+      setSearchItem('');
+      return;
+    }
+
     setIsLoading(true);
     setSearchItem(query);
 
@@ -36,15 +42,40 @@ function useSearch(initialSearchItem: string) {
       setIsLoading(true);
       fetchPokemonsList(currentPage, limitPerPage)
         .then((pokemonCards) => {
-          setPokemons(
-            pokemonCards.map((p) => ({
-              name: p.name,
-              height: 0,
-              weight: 0,
-              abilities: 'Unknown',
-              types: 'Unknown',
-            }))
+          if (!Array.isArray(pokemonCards)) {
+            throw new Error('Invalid response: expected an array');
+          }
+
+          return Promise.all(
+            pokemonCards.map(async (pokemon) => {
+              try {
+                const response = await fetch(pokemon.url);
+                if (!response.ok) throw new Error('Failed to fetch');
+                return response.json();
+              } catch {
+                return null;
+              }
+            })
           );
+        })
+        .then((detailedData) => {
+          const validPokemons = detailedData
+            .filter((data): data is Pokemon => data !== null)
+            .map((data) => ({
+              name: data.name,
+              height: data.height,
+              weight: data.weight,
+              abilities:
+                data.abilities
+                  ?.map((a: { ability: { name: string } }) => a.ability.name)
+                  .join(', ') ?? 'Unknown',
+              types:
+                data.types
+                  ?.map((t: { type: { name: string } }) => t.type.name)
+                  .join(', ') ?? 'Unknown',
+            }));
+
+          setPokemons(validPokemons);
           setIsLoading(false);
           setError(null);
         })

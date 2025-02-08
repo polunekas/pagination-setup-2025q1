@@ -12,7 +12,12 @@ const SearchBar: FC<SearchBarProps> = ({ fromSearch }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchItem(event.target.value);
+    const value = event.target.value;
+    setSearchItem(value);
+
+    if (value.trim() === '' && fromSearch) {
+      fromSearch('');
+    }
   };
 
   const handleSearch = () => {
@@ -26,6 +31,12 @@ const SearchBar: FC<SearchBarProps> = ({ fromSearch }) => {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (searchItem.trim() === '') {
+      if (fromSearch) fromSearch('');
+      return;
+    }
+
     handleSearch();
   };
 

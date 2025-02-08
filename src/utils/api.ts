@@ -15,9 +15,16 @@ export const fetchPokemonData = async (searchItem: string) => {
   return data;
 };
 
-export const fetchPokemonsList = async (page = 1, limit = 6) => {
+interface PokemonApiResponse {
+  results: PokemonCard[];
+}
+
+export const fetchPokemonsList = async (
+  page = 1,
+  limit = 6
+): Promise<PokemonCard[]> => {
   const offset = (page - 1) * limit;
-  if (offset >= 60) return []; // Ограничиваем до 60 покемонов
+  if (offset >= 60) return [];
 
   const response = await fetch(
     `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
@@ -27,6 +34,6 @@ export const fetchPokemonsList = async (page = 1, limit = 6) => {
     throw new Error('No pokemon found');
   }
 
-  const data = await response.json();
-  return data.results as PokemonCard[];
+  const data: PokemonApiResponse = await response.json();
+  return data.results; // теперь TypeScript точно знает, что это массив
 };

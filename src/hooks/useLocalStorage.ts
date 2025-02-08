@@ -3,14 +3,16 @@ import { useState, useEffect } from 'react';
 function useLocalStorage(key: string, initialValue: string) {
   const [storedValue, setStoredValue] = useState(() => {
     const item = localStorage.getItem(key);
-    return item ? item : initialValue;
+    return item !== null ? item : initialValue;
   });
 
   useEffect(() => {
-    if (storedValue !== initialValue) {
+    if (storedValue === '') {
+      localStorage.removeItem(key);
+    } else {
       localStorage.setItem(key, storedValue);
     }
-  }, [key, storedValue, initialValue]);
+  }, [key, storedValue]);
 
   return [storedValue, setStoredValue] as const;
 }

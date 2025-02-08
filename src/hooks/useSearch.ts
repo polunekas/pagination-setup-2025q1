@@ -25,7 +25,6 @@ function useSearch(initialSearchItem: string) {
     });
   };
 
-  // Автоматический поиск при изменении initialSearchItem
   useEffect(() => {
     if (initialSearchItem) {
       searchPokemon(initialSearchItem);

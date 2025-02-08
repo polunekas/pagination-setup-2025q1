@@ -24,7 +24,6 @@ const App: FC = () => {
     throw new Error('Test Error');
   }
 
-  // Определяем, выполняется ли поиск конкретного покемона
   const isSearchingSpecificPokemon = pokemons.length === 1 && searchItem !== '';
 
   return (
@@ -50,7 +49,7 @@ const App: FC = () => {
               setCurrentPage={setCurrentPage}
               totalPages={totalPages}
               searchItem={searchItem}
-              isSearchingSpecificPokemon={isSearchingSpecificPokemon} // Передаем состояние
+              isSearchingSpecificPokemon={isSearchingSpecificPokemon}
             />
           </div>
         )}

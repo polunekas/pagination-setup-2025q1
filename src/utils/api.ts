@@ -15,8 +15,10 @@ export const fetchPokemonData = async (searchItem: string) => {
   return data;
 };
 
-export const fetchPokemonsList = async (page = 1, limit = 30) => {
+export const fetchPokemonsList = async (page = 1, limit = 6) => {
   const offset = (page - 1) * limit;
+  if (offset >= 60) return []; // Ограничиваем до 60 покемонов
+
   const response = await fetch(
     `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
   );

@@ -7,9 +7,16 @@ import pokemonHeader from './assets/pokemon_header.webp';
 import useSearch from './hooks/useSearch';
 
 const App: FC = () => {
-  const { pokemons, isLoading, error, searchPokemon } = useSearch(
-    localStorage.getItem('searchItem') || ''
-  );
+  const {
+    pokemons,
+    isLoading,
+    error,
+    searchPokemon,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    searchItem,
+  } = useSearch(localStorage.getItem('searchItem') || '');
 
   const [throwError, setThrowError] = useState(false);
 
@@ -34,7 +41,13 @@ const App: FC = () => {
           <p>{error}</p>
         ) : (
           <div className={styles.resultsContainer}>
-            <SearchResults pokemons={pokemons} />
+            <SearchResults
+              pokemons={pokemons}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+              searchItem={searchItem}
+            />
           </div>
         )}
         <button

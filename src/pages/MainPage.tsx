@@ -58,16 +58,29 @@ const MainPage: FC = () => {
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <div className={styles.resultsContainer}>
-            <SearchResults
-              pokemons={pokemons}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              totalPages={totalPages}
-              searchItem={searchItem}
-              onPokemonClick={handlePokemonClick}
-              isSearchingSpecificPokemon={isSearchingSpecificPokemon} // Передаем пропс
-            />
+          <div className={styles.mainContainer}>
+            <div className={styles.resultsContainer}>
+              <SearchResults
+                pokemons={pokemons}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={totalPages}
+                searchItem={searchItem}
+                onPokemonClick={handlePokemonClick}
+                isSearchingSpecificPokemon={isSearchingSpecificPokemon}
+              />
+            </div>
+            <div className={styles.rightSection}>
+              <Outlet />
+              {isDetailsOpen && (
+                <button
+                  onClick={handleCloseDetails}
+                  className={styles.closeButton}
+                >
+                  Close Details
+                </button>
+              )}
+            </div>
           </div>
         )}
         <button
@@ -76,14 +89,6 @@ const MainPage: FC = () => {
         >
           Throw Error
         </button>
-      </div>
-      <div className={styles.rightSection}>
-        <Outlet />
-        {isDetailsOpen && (
-          <button onClick={handleCloseDetails} className={styles.closeButton}>
-            Close Details
-          </button>
-        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from './PokemonDetails.module.css';
 import { fetchPokemonData } from '../../utils/api';
 import Loader from '../Loader/Loader';
@@ -16,10 +16,12 @@ const PokemonDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!id) {
       setIsLoading(false);
+      navigate('/404');
       return;
     }
 
@@ -32,16 +34,17 @@ const PokemonDetails: FC = () => {
         setPokemon(data);
       } catch (error) {
         console.error(error);
+        navigate('/404');
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchDetails();
-  }, [id]);
+  }, [id, navigate]);
 
   if (isLoading) return <Loader />;
-  if (!pokemon) return <div>Pokemon not found</div>;
+  if (!pokemon) return null;
 
   return (
     <div className={styles.detailsContainer}>

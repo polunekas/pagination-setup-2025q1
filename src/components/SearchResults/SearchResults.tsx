@@ -17,6 +17,7 @@ interface SearchResultsProps {
   totalPages: number;
   searchItem: string;
   onPokemonClick: (id: string) => void;
+  isSearchingSpecificPokemon: boolean; // Новый пропс
 }
 
 const SearchResults: FC<SearchResultsProps> = ({
@@ -26,6 +27,7 @@ const SearchResults: FC<SearchResultsProps> = ({
   totalPages,
   searchItem,
   onPokemonClick,
+  isSearchingSpecificPokemon, // Принимаем пропс
 }) => {
   return (
     <>
@@ -52,7 +54,7 @@ const SearchResults: FC<SearchResultsProps> = ({
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
-        isSearchingSpecificPokemon={false}
+        isSearchingSpecificPokemon={isSearchingSpecificPokemon} // Передаем пропс
       />
     </>
   );

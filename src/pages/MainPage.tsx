@@ -40,6 +40,8 @@ const MainPage: FC = () => {
     throw new Error('Test Error');
   }
 
+  const isSearchingSpecificPokemon = pokemons.length === 1 && searchItem !== '';
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -64,6 +66,7 @@ const MainPage: FC = () => {
               totalPages={totalPages}
               searchItem={searchItem}
               onPokemonClick={handlePokemonClick}
+              isSearchingSpecificPokemon={isSearchingSpecificPokemon} // Передаем пропс
             />
           </div>
         )}

@@ -16,12 +16,9 @@ const PokemonDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      setIsLoading(true);
-      setError(null);
       try {
         const data = await fetchPokemonData(id!);
         if (!data || !data.name) {
@@ -29,7 +26,6 @@ const PokemonDetails: FC = () => {
         }
         setPokemon(data);
       } catch (error) {
-        // setError('Failed to fetch Pokémon details.');
         console.error(error);
       } finally {
         setIsLoading(false);
@@ -40,7 +36,6 @@ const PokemonDetails: FC = () => {
   }, [id]);
 
   if (isLoading) return <Loader />;
-  if (error) return <div>{error}</div>;
   if (!pokemon) return <div>Pokemon not found</div>;
 
   return (

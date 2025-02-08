@@ -18,9 +18,14 @@ const PokemonDetails: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!id) {
+      setIsLoading(false);
+      return;
+    }
+
     const fetchDetails = async () => {
       try {
-        const data = await fetchPokemonData(id!);
+        const data = await fetchPokemonData(id);
         if (!data || !data.name) {
           throw new Error('Invalid Pokémon data');
         }

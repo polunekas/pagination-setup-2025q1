@@ -62,9 +62,18 @@ export const handleSearch = async (
       });
 
       const detailedData = (await Promise.all(pokemonDetailsPromises)).filter(
-        (data): data is Pokemon => data !== null
+        (
+          data
+        ): data is {
+          name?: string;
+          height?: number;
+          weight?: number;
+          abilities?: { ability: { name: string } }[];
+          types?: { type: { name: string } }[];
+        } => data !== null
       );
-      pokemons = detailedData.map(parsePokemonData);
+
+      pokemons = detailedData.map((data) => parsePokemonData(data));
     }
 
     updateState({ searchItem, pokemons, isLoading: false, error: null });

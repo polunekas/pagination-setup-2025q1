@@ -46,19 +46,26 @@ function useSearch(initialSearchItem: string) {
         })
         .then((detailedData) => {
           const validPokemons = detailedData
-            .filter((data): data is Pokemon => data !== null)
+            .filter(
+              (
+                data
+              ): data is {
+                name: string;
+                height: number;
+                weight: number;
+                abilities: { ability: { name: string } }[];
+                types: { type: { name: string } }[];
+              } => data !== null
+            )
             .map((data) => ({
               name: data.name,
               height: data.height,
               weight: data.weight,
               abilities:
-                data.abilities
-                  ?.map((a: { ability: { name: string } }) => a.ability.name)
-                  .join(', ') ?? 'Unknown',
+                data.abilities?.map((a) => a.ability.name).join(', ') ??
+                'Unknown',
               types:
-                data.types
-                  ?.map((t: { type: { name: string } }) => t.type.name)
-                  .join(', ') ?? 'Unknown',
+                data.types?.map((t) => t.type.name).join(', ') ?? 'Unknown',
             }));
 
           setPokemons(validPokemons);
@@ -72,6 +79,7 @@ function useSearch(initialSearchItem: string) {
 
       return;
     }
+
     setIsLoading(true);
     setSearchItem(query);
 
@@ -112,19 +120,26 @@ function useSearch(initialSearchItem: string) {
         })
         .then((detailedData) => {
           const validPokemons = detailedData
-            .filter((data): data is Pokemon => data !== null)
+            .filter(
+              (
+                data
+              ): data is {
+                name: string;
+                height: number;
+                weight: number;
+                abilities: { ability: { name: string } }[];
+                types: { type: { name: string } }[];
+              } => data !== null
+            )
             .map((data) => ({
               name: data.name,
               height: data.height,
               weight: data.weight,
               abilities:
-                data.abilities
-                  ?.map((a: { ability: { name: string } }) => a.ability.name)
-                  .join(', ') ?? 'Unknown',
+                data.abilities?.map((a) => a.ability.name).join(', ') ??
+                'Unknown',
               types:
-                data.types
-                  ?.map((t: { type: { name: string } }) => t.type.name)
-                  .join(', ') ?? 'Unknown',
+                data.types?.map((t) => t.type.name).join(', ') ?? 'Unknown',
             }));
 
           setPokemons(validPokemons);

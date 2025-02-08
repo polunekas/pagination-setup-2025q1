@@ -5,31 +5,31 @@ interface PaginationProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
   totalPages: number;
-  isSearchingSpecificPokemon: boolean; // Добавляем новое свойство
+  isSearchingSpecificPokemon: boolean;
 }
 
 const Pagination: FC<PaginationProps> = ({
   currentPage,
   setCurrentPage,
   totalPages,
-  isSearchingSpecificPokemon, // Получаем новое состояние
+  isSearchingSpecificPokemon,
 }) => {
   return (
     <div className={styles.pagination}>
       <button
         className={styles.pageButton}
         onClick={() => setCurrentPage(currentPage - 1)}
-        disabled={currentPage === 1 || isSearchingSpecificPokemon} // Блокируем кнопку
+        disabled={currentPage === 1 || isSearchingSpecificPokemon}
       >
         Previous
       </button>
-      <span>
+      <span className={styles.paginationPage}>
         Page {currentPage} of {totalPages}
       </span>
       <button
         className={styles.pageButton}
         onClick={() => setCurrentPage(currentPage + 1)}
-        disabled={currentPage === totalPages || isSearchingSpecificPokemon} // Блокируем кнопку
+        disabled={currentPage === totalPages || isSearchingSpecificPokemon}
       >
         Next
       </button>

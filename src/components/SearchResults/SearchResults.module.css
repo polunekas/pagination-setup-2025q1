@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-height: 400px;
+  max-height: 600px;
   overflow-y: auto;
   margin-top: 20px;
   gap: 20px;

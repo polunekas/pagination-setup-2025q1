@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { handleSearch, Pokemon } from '../utils/handleSearch';
 
 function useSearch(initialSearchItem: string) {
-  const [searchItem, setSearchItem] = useState(initialSearchItem);
+  const [searchItem] = useState(initialSearchItem);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,6 @@ function useSearch(initialSearchItem: string) {
 
   return {
     searchItem,
-    setSearchItem,
     pokemons,
     isLoading,
     error,

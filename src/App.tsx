@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styles from './App.module.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
@@ -7,12 +7,15 @@ import pokemonHeader from './assets/pokemon_header.webp';
 import useSearch from './hooks/useSearch';
 
 const App: FC = () => {
-  const { setSearchItem, pokemons, isLoading, error, searchPokemon } =
-    useSearch(localStorage.getItem('searchItem') || '');
+  const { pokemons, isLoading, error, searchPokemon } = useSearch(
+    localStorage.getItem('searchItem') || ''
+  );
 
-  const triggerError = () => {
-    setSearchItem('');
-  };
+  const [throwError, setThrowError] = useState(false);
+
+  if (throwError) {
+    throw new Error('Test Error');
+  }
 
   return (
     <div className={styles.root}>
@@ -34,7 +37,10 @@ const App: FC = () => {
             <SearchResults pokemons={pokemons} />
           </div>
         )}
-        <button className={styles.errorButton} onClick={triggerError}>
+        <button
+          className={styles.errorButton}
+          onClick={() => setThrowError(true)}
+        >
           Throw Error
         </button>
       </div>

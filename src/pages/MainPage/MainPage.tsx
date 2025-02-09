@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import styles from './MainPage.module.css';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -23,6 +23,7 @@ const MainPage: FC = () => {
   const location = useLocation();
   const [throwError, setThrowError] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const detailsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setIsDetailsOpen(location.pathname.includes('/details/'));
@@ -34,6 +35,16 @@ const MainPage: FC = () => {
 
   const handleCloseDetails = () => {
     navigate('/');
+  };
+
+  const handleContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (
+      isDetailsOpen &&
+      detailsRef.current &&
+      !detailsRef.current.contains(event.target as Node)
+    ) {
+      handleCloseDetails();
+    }
   };
 
   if (throwError) {
@@ -59,7 +70,10 @@ const MainPage: FC = () => {
           <p>{error}</p>
         ) : (
           <div className={styles.mainContainer}>
-            <div className={styles.resultsContainer}>
+            <div
+              className={styles.resultsContainer}
+              onClick={handleContainerClick}
+            >
               <SearchResults
                 pokemons={pokemons}
                 currentPage={currentPage}
@@ -70,7 +84,7 @@ const MainPage: FC = () => {
                 isSearchingSpecificPokemon={isSearchingSpecificPokemon}
               />
             </div>
-            <div className={styles.rightSection}>
+            <div className={styles.rightSection} ref={detailsRef}>
               <Outlet />
               {isDetailsOpen && (
                 <button

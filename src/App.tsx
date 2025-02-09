@@ -1,13 +1,24 @@
-import './App.css';
+import { FC } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import MainPage from './pages/MainPage/MainPage';
+import PokemonDetails from './components/PokemonDetails/PokemonDetails';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
-function App() {
+const App: FC = () => {
   return (
-    <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ErrorBoundary>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainPage />}>
+            <Route path="details/:id" element={<PokemonDetails />} />
+          </Route>
+          <Route path="/404" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </ErrorBoundary>
   );
-}
+};
 
 export default App;

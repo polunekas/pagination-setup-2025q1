@@ -1,0 +1,16 @@
+.pagination {
+  margin-top: 30px;
+}
+
+.pageButton {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #ffcc00;
+  border: none;
+  width: 100px;
+  cursor: pointer;
+}
+
+.paginationPage {
+  margin: 0 20px;
+}

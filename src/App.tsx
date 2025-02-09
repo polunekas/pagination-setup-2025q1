@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/MainPage/MainPage';
 import PokemonDetails from './components/PokemonDetails/PokemonDetails';
-import NotFoundPage from './components/NotFoundPage/NotFoundPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 const App: FC = () => {
   return (

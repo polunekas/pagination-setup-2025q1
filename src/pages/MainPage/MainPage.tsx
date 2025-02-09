@@ -1,11 +1,11 @@
 import { FC, useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import styles from './MainPage.module.css';
-import SearchBar from '../components/SearchBar/SearchBar';
-import SearchResults from '../components/SearchResults/SearchResults';
-import Loader from '../components/Loader/Loader';
-import useSearch from '../hooks/useSearch';
-import pokemonHeader from '../assets/pokemon_header.webp';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import SearchResults from '../../components/SearchResults/SearchResults';
+import Loader from '../../components/Loader/Loader';
+import useSearch from '../../hooks/useSearch';
+import pokemonHeader from '../../assets/pokemon_header.webp';
 
 const MainPage: FC = () => {
   const {

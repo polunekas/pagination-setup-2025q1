@@ -35,5 +35,5 @@ export const fetchPokemonsList = async (
   }
 
   const data: PokemonApiResponse = await response.json();
-  return data.results; // теперь TypeScript точно знает, что это массив
+  return data.results;
 };

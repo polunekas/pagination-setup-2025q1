@@ -35,7 +35,6 @@ describe('SearchResults', () => {
       />
     );
 
-    // Проверяем, что покемоны отображаются
     expect(screen.getByText('Pikachu')).toBeInTheDocument();
     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
   });
@@ -53,7 +52,6 @@ describe('SearchResults', () => {
       />
     );
 
-    // Проверяем, что сообщение отображается
     expect(screen.getByText('No pokemons found')).toBeInTheDocument();
   });
 
@@ -89,7 +87,6 @@ describe('SearchResults', () => {
       />
     );
 
-    // Проверяем, что пагинация отображается
     expect(screen.getByText('Previous')).toBeInTheDocument();
     expect(screen.getByText('Next')).toBeInTheDocument();
   });

@@ -7,8 +7,6 @@ describe('SearchBar', () => {
 
   it('renders the search bar component', () => {
     render(<SearchBar />);
-
-    // Проверяем, что поле ввода и кнопка отображаются
     expect(screen.getByPlaceholderText('pikachu')).toBeInTheDocument();
     expect(screen.getByText('Search')).toBeInTheDocument();
   });

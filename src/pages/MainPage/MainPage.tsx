@@ -6,6 +6,7 @@ import SearchResults from '../../components/SearchResults/SearchResults';
 import Loader from '../../components/Loader/Loader';
 import useSearch from '../../hooks/useSearch';
 import pokemonHeader from '../../assets/pokemon_header.webp';
+import Flyout from '../../components/Flyout/Flyout';
 
 const MainPage: FC = () => {
   const {
@@ -83,6 +84,7 @@ const MainPage: FC = () => {
                 onPokemonClick={handlePokemonClick}
                 isSearchingSpecificPokemon={isSearchingSpecificPokemon}
               />
+              <Flyout />
             </section>
             <section className={styles.rightSection} ref={detailsRef}>
               <Outlet />

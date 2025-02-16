@@ -8,6 +8,9 @@ import useSearch from '../../hooks/useSearch';
 import pokemonHeader from '../../assets/pokemon_header.webp';
 import Flyout from '../../components/Flyout/Flyout';
 import { useGetPokemonsListQuery } from '../../store/api/pokemonApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '@reduxjs/toolkit/query';
+import { useTheme } from '../../context/ThemeContext';
 
 const MainPage: FC = () => {
   const { searchPokemon, currentPage, setCurrentPage, totalPages, searchItem } =
@@ -21,6 +24,9 @@ const MainPage: FC = () => {
     page: currentPage,
     limit: 6,
   });
+  const selectedItems = useSelector(
+    (state: RootState) => state.selectedItems.selectedItems
+  );
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,8 +63,13 @@ const MainPage: FC = () => {
   const isSearchingSpecificPokemon =
     pokemons?.length === 1 && searchItem !== '';
 
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <div className={styles.root}>
+    <div className={`${styles.root} ${theme === 'dark' ? styles.dark : ''}`}>
+      <button onClick={toggleTheme} className={styles.themeButton}>
+        Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
+      </button>
       <div className={styles.container}>
         <header className={styles.header}>
           <img
@@ -87,7 +98,7 @@ const MainPage: FC = () => {
                 onPokemonClick={handlePokemonClick}
                 isSearchingSpecificPokemon={isSearchingSpecificPokemon}
               />
-              <Flyout />
+              {selectedItems.length > 0 && <Flyout />}
             </section>
             <section className={styles.rightSection} ref={detailsRef}>
               <Outlet />

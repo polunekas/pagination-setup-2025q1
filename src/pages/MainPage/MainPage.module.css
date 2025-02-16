@@ -26,6 +26,10 @@ html {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.dark {
+  background-color: #202020;
+}
+
 .header {
   display: flex;
   flex-direction: column;

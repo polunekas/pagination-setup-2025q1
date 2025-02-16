@@ -7,18 +7,20 @@ import Loader from '../../components/Loader/Loader';
 import useSearch from '../../hooks/useSearch';
 import pokemonHeader from '../../assets/pokemon_header.webp';
 import Flyout from '../../components/Flyout/Flyout';
+import { useGetPokemonsListQuery } from '../../store/api/pokemonApi';
 
 const MainPage: FC = () => {
+  const { searchPokemon, currentPage, setCurrentPage, totalPages, searchItem } =
+    useSearch(localStorage.getItem('searchItem') || '');
   const {
-    pokemons,
+    data: pokemons,
     isLoading,
+    isError,
     error,
-    searchPokemon,
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    searchItem,
-  } = useSearch(localStorage.getItem('searchItem') || '');
+  } = useGetPokemonsListQuery({
+    page: currentPage,
+    limit: 6,
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,7 +54,8 @@ const MainPage: FC = () => {
     throw new Error('Test Error');
   }
 
-  const isSearchingSpecificPokemon = pokemons.length === 1 && searchItem !== '';
+  const isSearchingSpecificPokemon =
+    pokemons?.length === 1 && searchItem !== '';
 
   return (
     <div className={styles.root}>
@@ -67,8 +70,8 @@ const MainPage: FC = () => {
         <SearchBar fromSearch={searchPokemon} />
         {isLoading ? (
           <Loader />
-        ) : error ? (
-          <p>{error}</p>
+        ) : isError ? (
+          <p>Error: {error?.toString()}</p>
         ) : (
           <div className={styles.mainContainer}>
             <section
@@ -76,7 +79,7 @@ const MainPage: FC = () => {
               onClick={handleContainerClick}
             >
               <SearchResults
-                pokemons={pokemons}
+                pokemons={pokemons || []}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 totalPages={totalPages}

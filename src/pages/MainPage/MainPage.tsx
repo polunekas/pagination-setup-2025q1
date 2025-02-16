@@ -70,7 +70,7 @@ const MainPage: FC = () => {
           <p>{error}</p>
         ) : (
           <div className={styles.mainContainer}>
-            <div
+            <section
               className={styles.resultsContainer}
               onClick={handleContainerClick}
             >
@@ -83,8 +83,8 @@ const MainPage: FC = () => {
                 onPokemonClick={handlePokemonClick}
                 isSearchingSpecificPokemon={isSearchingSpecificPokemon}
               />
-            </div>
-            <div className={styles.rightSection} ref={detailsRef}>
+            </section>
+            <section className={styles.rightSection} ref={detailsRef}>
               <Outlet />
               {isDetailsOpen && (
                 <button
@@ -94,7 +94,7 @@ const MainPage: FC = () => {
                   Close Details
                 </button>
               )}
-            </div>
+            </section>
           </div>
         )}
         <button

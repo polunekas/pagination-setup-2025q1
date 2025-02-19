@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/Pagination/Pagination.tsx</title>
+    <title>Code coverage report for src/components/Flyout/Flyout.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/Pagination</a> Pagination.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/Flyout</a> Flyout.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">64.28% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>9/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -110,8 +110,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -119,70 +139,50 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { FC } from 'react';
-import styles from './Pagination.module.css';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearItems } from '../../store/slices/selectedItemsSlice';
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
+import styles from './Flyout.module.scss';
 &nbsp;
-interface PaginationProps {
-  currentPage: number;
-  setCurrentPage: (page: number) =&gt; void;
-  totalPages: number;
-  isSearchingSpecificPokemon: boolean;
-}
+const Flyout: React.FC = () =&gt; {
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(
+    (state) =&gt; state.selectedItems.selectedItems
+  );
 &nbsp;
-const Pagination: FC&lt;PaginationProps&gt; = ({
-  currentPage,
-  setCurrentPage,
-  totalPages,
-  isSearchingSpecificPokemon,
-}) =&gt; {
+  const handleUnselectAll = () =&gt; {
+    dispatch(clearItems());
+  };
+&nbsp;
+  const handleDownload = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+    const csvData = <span class="cstat-no" title="statement not covered" >selectedItems.map(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      name: item,
+    }));
+&nbsp;
+    const csv = <span class="cstat-no" title="statement not covered" >Papa.unparse(csvData);</span>
+    const blob = <span class="cstat-no" title="statement not covered" >new Blob([csv], { type: 'text/csv;charset=utf-8;' });</span>
+    const fileName = <span class="cstat-no" title="statement not covered" >`${selectedItems.length}_pokemons.csv`;</span>
+<span class="cstat-no" title="statement not covered" >    saveAs(blob, fileName);</span>
+  };
+&nbsp;
+  if (selectedItems.length === 0) return null;
+&nbsp;
   return (
-    &lt;div className={styles.pagination}&gt;
-      &lt;button
-        className={styles.pageButton}
-        onClick={() =&gt; setCurrentPage(currentPage - 1)}
-        disabled={currentPage === 1 || isSearchingSpecificPokemon}
-      &gt;
-        Previous
-      &lt;/button&gt;
-      &lt;span className={styles.paginationPage}&gt;
-        Page {currentPage} of {totalPages}
-      &lt;/span&gt;
-      &lt;button
-        className={styles.pageButton}
-        onClick={() =&gt; setCurrentPage(currentPage + 1)}
-        disabled={currentPage === totalPages || isSearchingSpecificPokemon}
-      &gt;
-        Next
-      &lt;/button&gt;
+    &lt;div className={styles.flyout}&gt;
+      &lt;p&gt;{selectedItems.length} items are selected&lt;/p&gt;
+      &lt;button onClick={handleUnselectAll}&gt;Unselect all&lt;/button&gt;
+      &lt;button onClick={handleDownload}&gt;Download&lt;/button&gt;
     &lt;/div&gt;
   );
 };
 &nbsp;
-export default Pagination;
+export default Flyout;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 import SearchResults from './SearchResults';
-import '@testing-library/jest-dom';
+import { describe, it, expect, vi } from 'vitest';
 
 const mockPokemons = [
   {
@@ -21,9 +23,13 @@ const mockPokemons = [
 
 const mockOnPokemonClick = vi.fn();
 
+const renderWithRedux = (component) => {
+  return render(<Provider store={store}>{component}</Provider>);
+};
+
 describe('SearchResults', () => {
   it('renders the list of pokemons', () => {
-    render(
+    renderWithRedux(
       <SearchResults
         pokemons={mockPokemons}
         currentPage={1}
@@ -40,7 +46,7 @@ describe('SearchResults', () => {
   });
 
   it('renders "No pokemons found" when the list is empty', () => {
-    render(
+    renderWithRedux(
       <SearchResults
         pokemons={[]}
         currentPage={1}
@@ -56,7 +62,7 @@ describe('SearchResults', () => {
   });
 
   it('calls onPokemonClick when a pokemon is clicked', () => {
-    render(
+    renderWithRedux(
       <SearchResults
         pokemons={mockPokemons}
         currentPage={1}
@@ -70,12 +76,11 @@ describe('SearchResults', () => {
 
     const pikachuElement = screen.getByText('Pikachu');
     fireEvent.click(pikachuElement);
-
     expect(mockOnPokemonClick).toHaveBeenCalledWith('pikachu');
   });
 
-  it('renders the Pagination component', () => {
-    render(
+  it('checks and unchecks the checkbox when clicked', () => {
+    renderWithRedux(
       <SearchResults
         pokemons={mockPokemons}
         currentPage={1}
@@ -87,7 +92,13 @@ describe('SearchResults', () => {
       />
     );
 
-    expect(screen.getByText('Previous')).toBeInTheDocument();
-    expect(screen.getByText('Next')).toBeInTheDocument();
+    const checkbox = screen.getByLabelText(mockPokemons[0].name.toLowerCase());
+    fireEvent.click(checkbox);
+    expect(store.getState().selectedItems.selectedItems).toContain('pikachu');
+
+    fireEvent.click(checkbox);
+    expect(store.getState().selectedItems.selectedItems).not.toContain(
+      'pikachu'
+    );
   });
 });

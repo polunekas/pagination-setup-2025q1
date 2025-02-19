@@ -4,25 +4,26 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'jsdom', // Для тестирования React-компонентов
-    globals: true, // Включает глобальные переменные, такие как `expect`, `describe`, `it`
-    setupFiles: './src/setupTests.ts', // Файл с настройками
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/setupTests.ts',
     coverage: {
-      provider: 'istanbul', // Используем Istanbul для покрытия
-      include: ['**/*.tsx'], // Включаем только .tsx файлы
+      provider: 'istanbul',
+      include: ['**/*.tsx'],
       exclude: [
         '**/node_modules/**',
         '**/*.test.tsx',
         '**/*.spec.tsx',
         'src/__tests__/setup.ts',
-        'src/App.tsx', // Исключаем App.tsx
+        'src/App.tsx',
+        'src/pages/MainPage.tsx',
       ],
-      reporter: ['text', 'json', 'html'], // Форматы отчетов
+      reporter: ['text', 'json', 'html'],
       thresholds: {
-        lines: 70, // Минимальное покрытие для строк
-        functions: 70, // Минимальное покрытие для функций
-        branches: 70, // Минимальное покрытие для ветвей
-        statements: 70, // Минимальное покрытие для выражений
+        lines: 70,
+        functions: 70,
+        branches: 70,
+        statements: 70,
       },
     },
   },

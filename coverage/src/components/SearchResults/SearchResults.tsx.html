@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -126,7 +126,27 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,8 +177,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,9 +195,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -190,6 +226,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, removeItem } from '../../store/slices/selectedItemsSlice';
 import styles from './SearchResults.module.css';
 import Pagination from '../Pagination/Pagination';
 &nbsp;
@@ -220,21 +258,37 @@ const SearchResults: FC&lt;SearchResultsProps&gt; = ({
   onPokemonClick,
   isSearchingSpecificPokemon,
 }) =&gt; {
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(
+    (state) =&gt; state.selectedItems.selectedItems
+  );
+&nbsp;
+  const handleCheckboxChange = (pokemonName: string) =&gt; {
+    if (selectedItems.includes(pokemonName)) {
+      dispatch(removeItem(pokemonName));
+    } else {
+      dispatch(addItem(pokemonName));
+    }
+  };
+&nbsp;
   return (
     &lt;&gt;
       &lt;div className={styles.resultsContainer}&gt;
         {pokemons.length &gt; 0 ? (
           pokemons.map((result, index) =&gt; (
-            &lt;div
-              key={index}
-              className={`${styles.resultItem} ${
-                searchItem.toLowerCase() === result.name.toLowerCase()
-                  ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.highlight</span>
-                  : ''
-              }`}
-              onClick={() =&gt; onPokemonClick(result.name)}
-            &gt;
-              &lt;h3&gt;{result.name[0].toUpperCase() + result.name.slice(1)}&lt;/h3&gt;
+            &lt;div key={index} className={styles.resultItem}&gt;
+              &lt;input
+                type="checkbox"
+                checked={selectedItems.includes(result.name)}
+                onChange={() =&gt; handleCheckboxChange(result.name)}
+                aria-label={result.name}
+              /&gt;
+              &lt;span
+                className={`${searchItem.toLowerCase() === result.name.toLowerCase() ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.highlight : '</span>'}`}
+                onClick={() =&gt; onPokemonClick(result.name)}
+              &gt;
+                {result.name[0].toUpperCase() + result.name.slice(1)}
+              &lt;/span&gt;
             &lt;/div&gt;
           ))
         ) : (
@@ -259,7 +313,7 @@ export default SearchResults;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-02-15T21:01:56.969Z
+                at 2025-02-19T20:46:52.322Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

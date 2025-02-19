@@ -54,6 +54,7 @@ const SearchResults: FC<SearchResultsProps> = ({
                 type="checkbox"
                 checked={selectedItems.includes(result.name)}
                 onChange={() => handleCheckboxChange(result.name)}
+                aria-label={result.name}
               />
               <span
                 className={`${searchItem.toLowerCase() === result.name.toLowerCase() ? styles.highlight : ''}`}

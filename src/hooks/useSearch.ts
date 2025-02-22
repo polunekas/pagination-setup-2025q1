@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { handleSearch, Pokemon } from '../utils/handleSearch';
+import { handleSearch } from '../utils/handleSearch';
 import { fetchPokemonsList } from '../utils/api';
+import { Pokemon } from '../types/types';
 
 function useSearch(initialSearchItem: string) {
   const [searchItem, setSearchItem] = useState(initialSearchItem);

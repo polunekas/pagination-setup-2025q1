@@ -10,6 +10,10 @@ html {
   color: #333;
 }
 
+[data-theme='dark'] {
+  --background-color: #202020;
+}
+
 .container {
   width: 100%;
   max-width: 1180px;
@@ -28,6 +32,10 @@ html {
 
 .dark {
   background-color: #202020;
+}
+
+.dark .paginationPage {
+  color: white;
 }
 
 .header {

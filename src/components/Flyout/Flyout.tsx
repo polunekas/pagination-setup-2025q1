@@ -4,11 +4,16 @@ import { clearItems } from '../../store/slices/selectedItemsSlice';
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import styles from './Flyout.module.scss';
+import { RootState } from '../../store/store';
+
+interface SelectedItem {
+  name: string;
+}
 
 const Flyout: React.FC = () => {
   const dispatch = useDispatch();
   const selectedItems = useSelector(
-    (state) => state.selectedItems.selectedItems
+    (state: RootState) => state.selectedItems.selectedItems
   );
 
   const handleUnselectAll = () => {
@@ -16,7 +21,7 @@ const Flyout: React.FC = () => {
   };
 
   const handleDownload = () => {
-    const csvData = selectedItems.map((item) => ({
+    const csvData: SelectedItem[] = selectedItems.map((item: string) => ({
       name: item,
     }));
 

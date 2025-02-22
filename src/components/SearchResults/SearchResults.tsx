@@ -3,14 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem } from '../../store/slices/selectedItemsSlice';
 import styles from './SearchResults.module.css';
 import Pagination from '../Pagination/Pagination';
-
-interface Pokemon {
-  name: string;
-  height: number;
-  weight: number;
-  abilities: string;
-  types: string;
-}
+import { RootState } from '../../store/store';
+import { Pokemon } from '../../types/types';
 
 interface SearchResultsProps {
   pokemons: Pokemon[];
@@ -33,7 +27,7 @@ const SearchResults: FC<SearchResultsProps> = ({
 }) => {
   const dispatch = useDispatch();
   const selectedItems = useSelector(
-    (state) => state.selectedItems.selectedItems
+    (state: RootState) => state.selectedItems.selectedItems
   );
 
   const handleCheckboxChange = (pokemonName: string) => {

@@ -23,7 +23,7 @@ const mockPokemons = [
 
 const mockOnPokemonClick = vi.fn();
 
-const renderWithRedux = (component) => {
+const renderWithRedux = (component: React.ReactNode) => {
   return render(<Provider store={store}>{component}</Provider>);
 };
 

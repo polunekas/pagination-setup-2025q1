@@ -9,8 +9,9 @@ import pokemonHeader from '../../assets/pokemon_header.webp';
 import Flyout from '../../components/Flyout/Flyout';
 import { useGetPokemonsListQuery } from '../../store/api/pokemonApi';
 import { useSelector } from 'react-redux';
-import { RootState } from '@reduxjs/toolkit/query';
+import { RootState } from '../../store/store';
 import { useTheme } from '../../context/ThemeContext';
+import { Pokemon } from '../../types/types';
 
 const MainPage: FC = () => {
   const { searchPokemon, currentPage, setCurrentPage, totalPages, searchItem } =
@@ -33,6 +34,7 @@ const MainPage: FC = () => {
   const [throwError, setThrowError] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const detailsRef = useRef<HTMLDivElement | null>(null);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     setIsDetailsOpen(location.pathname.includes('/details/'));
@@ -63,7 +65,14 @@ const MainPage: FC = () => {
   const isSearchingSpecificPokemon =
     pokemons?.length === 1 && searchItem !== '';
 
-  const { theme, toggleTheme } = useTheme();
+  const transformedPokemons: Pokemon[] =
+    pokemons?.map((pokemon) => ({
+      name: pokemon.name,
+      height: pokemon.height,
+      weight: pokemon.weight,
+      abilities: pokemon.abilities.map((a) => a.ability.name).join(', '),
+      types: pokemon.types.map((t) => t.type.name).join(', '),
+    })) || [];
 
   return (
     <div className={`${styles.root} ${theme === 'dark' ? styles.dark : ''}`}>
@@ -90,7 +99,7 @@ const MainPage: FC = () => {
               onClick={handleContainerClick}
             >
               <SearchResults
-                pokemons={pokemons || []}
+                pokemons={transformedPokemons}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 totalPages={totalPages}
